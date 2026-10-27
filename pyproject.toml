@@ -1,0 +1,58 @@
+# Tool configuration for BlindAssist.
+#
+# Only [tool.*] sections live here: the project is run in-place with
+# `python -m blindassist.app`, so it is deliberately not an installable package.
+
+[tool.black]
+line-length = 88
+target-version = ["py313"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+# Tests that intentionally feed the code awkward input are excluded from
+# linting; they are still executed by pytest.
+extend-exclude = ["tests/test_qa_stress.py"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes: unused imports, undefined names
+    "I",    # import sorting
+    "UP",   # pyupgrade
+    "B",    # bugbear: likely bugs
+    "C4",   # comprehension rules
+    "RUF",  # ruff-specific rules (incl. stale `noqa` detection)
+    "PL",   # pylint
+    "S",    # bandit: security
+]
+ignore = [
+    "E501",     # line length is black's job, not the linter's
+    # -- best-effort code -------------------------------------------------
+    # Every `except: pass` in this project guards a cleanup or probe that has a
+    # defined fallback (cv2.destroyAllWindows on headless CI, reading the CPU
+    # name from the registry, reconfiguring console encoding). Silencing them
+    # is intended; re-raising would take down an app whose video feed is the
+    # primary output for a blind user.
+    "S110",
+    "S603",     # subprocess is always spawned as [sys.executable, ...] or powershell
+    "S607",     # partial executable paths: powershell.exe lives on PATH by design
+    # -- optional dependencies loaded where they are used ------------------
+    "PLC0415",  # torch / ultralytics / winreg / cv2 are imported lazily on purpose
+    # -- size limits that punish deliberate structure ----------------------
+    "PLR0913",  # too many arguments: config objects travel together
+    "PLR0917",  # too many positional arguments (same family as PLR0913)
+    "PLR0912",  # too many branches: the key handler is intentionally flat
+    "PLR0915",  # too many statements
+    # -- typography --------------------------------------------------------
+    # The multiplication sign and en dash are used deliberately in the Markdown
+    # evidence tables and the generated notebook; ruff reads them as
+    # ASCII-homoglyph false positives, not obfuscation.
+    "RUF001",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# The assertions ARE the test suite, and numeric literals in an assertion are
+# the expected value rather than a magic comparison.
+"tests/*" = ["S101", "PLR2004"]

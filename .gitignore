@@ -1,0 +1,50 @@
+# Virtual environment (junction -> C:\dev\ba_venv)
+.venv/
+venv/
+env/
+
+# Editor / tooling state
+.vscode/
+.idea/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# YOLO weights (re-downloaded on first run)
+models/*.pt
+
+# Test / tooling caches and coverage data
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Runtime output
+logs/
+runs/
+
+# Local datasets and screenshots/frames
+datasets/
+
+# Not published in this repository (kept on the author's machine):
+# measurement evidence, the written report, the slide deck and the guide.
+Evidence/
+Docs/
+Presentation/
+*.docx
+*.pptx
+
+# Document builders: they generate the report / deck / guide, which are not
+# part of this repository.
+scripts/build_report.py
+scripts/build_pptx.py
+scripts/build_guide.py
+scripts/build_proposal.py
+scripts/guide_content.py
+scripts/make_report.py
+scripts/make_pptx.py
+scripts/make_guide.py
+scripts/report_figures.py

@@ -1,0 +1,123 @@
+{
+  "_about": [
+    "Hand-annotated ground truth for the position/distance accuracy test (v2 set).",
+    "Each entry was written by looking at the image and recording where a human",
+    "perceives the object to be, independently of what the detector outputs.",
+    "",
+    "Sources of the 10 scenes:",
+    "  vid_XXs.jpg  - real frames extracted from the 60 s webcam recording",
+    "                 (assets/scene60.avi), timestamps 3/11/19/27/35/43/51 s",
+    "  sample_*.jpg - the three sample photos, annotations carried over unchanged",
+    "                 from the original ground_truth.json (verified in the v1 report)",
+    "",
+    "The original 7 webcam frames (cam_01..cam_07.jpg) referenced by the v1 set",
+    "are no longer on disk; only their annotated copies survive in",
+    "Evidence/eval_position/. This v2 set replaces them with freshly recorded",
+    "real frames so the 10-scene test can be re-run.",
+    "",
+    "Fields per object:",
+    "  label        - COCO class name (must be inside the app's default whitelist)",
+    "  cx_frac      - HUMAN estimate of the object's centre-x as a fraction of the",
+    "                 frame width (0.0 = left edge, 1.0 = right edge). Used only",
+    "                 to pair expectations with detections, never to score them.",
+    "  horizontal   - 'left' / 'ahead' / 'right', judged by eye",
+    "  distance_band- 'very close' / 'near' / 'far', judged by apparent size",
+    "",
+    "Direction rule (the same three-way split the app implements):",
+    "  centre_x < width/3      -> left",
+    "  centre_x < 2*width/3    -> ahead",
+    "  otherwise               -> right",
+    "",
+    "Distance bands are judged from how much of the frame the object appears to",
+    "occupy (the same cue the app uses, but judged by eye, not computed):",
+    "  >= 20% of frame -> 'very close', >= 5% -> 'near', else 'far'.",
+    "This is deliberately NOT ground-truth depth: there is no depth sensor in the",
+    "project, so 'distance' here can only be validated against apparent size."
+  ],
+  "images": [
+    {
+      "image": "vid_03s.jpg",
+      "scene": "dim room, person close to the lens and centred, glass cabinet at the left",
+      "expected": [
+        {"label": "person", "cx_frac": 0.54, "horizontal": "ahead", "distance_band": "very close"}
+      ]
+    },
+    {
+      "image": "vid_11s.jpg",
+      "scene": "same room, person leaning slightly towards the right of frame",
+      "expected": [
+        {"label": "person", "cx_frac": 0.58, "horizontal": "ahead", "distance_band": "very close"}
+      ]
+    },
+    {
+      "image": "vid_19s.jpg",
+      "scene": "same room, person centred, looking into the lens",
+      "expected": [
+        {"label": "person", "cx_frac": 0.57, "horizontal": "ahead", "distance_band": "very close"}
+      ]
+    },
+    {
+      "image": "vid_27s.jpg",
+      "scene": "same room, person slightly right of centre, patterned cover at the right",
+      "expected": [
+        {"label": "person", "cx_frac": 0.59, "horizontal": "ahead", "distance_band": "very close"}
+      ]
+    },
+    {
+      "image": "vid_35s.jpg",
+      "scene": "same room, person turned a little, striped bedding visible behind",
+      "expected": [
+        {"label": "person", "cx_frac": 0.58, "horizontal": "ahead", "distance_band": "very close"}
+      ]
+    },
+    {
+      "image": "vid_43s.jpg",
+      "scene": "same room, person resting chin near hand, shifted right",
+      "expected": [
+        {"label": "person", "cx_frac": 0.6, "horizontal": "ahead", "distance_band": "very close"}
+      ]
+    },
+    {
+      "image": "vid_51s.jpg",
+      "scene": "same room, person furthest right of the sequence, looking down",
+      "expected": [
+        {"label": "person", "cx_frac": 0.65, "horizontal": "ahead", "distance_band": "very close"}
+      ]
+    },
+    {
+      "image": "sample_person.jpg",
+      "scene": "sunny street, blue electric bus across the middle, four pedestrians at different depths",
+      "expected": [
+        {"label": "bus", "cx_frac": 0.5, "horizontal": "ahead", "distance_band": "very close"},
+        {"label": "person", "cx_frac": 0.18, "horizontal": "left", "distance_band": "near"},
+        {"label": "person", "cx_frac": 0.36, "horizontal": "ahead", "distance_band": "near"},
+        {"label": "person", "cx_frac": 0.93, "horizontal": "right", "distance_band": "near"},
+        {"label": "person", "cx_frac": 0.07, "horizontal": "left", "distance_band": "near"}
+      ]
+    },
+    {
+      "image": "sample_chair.jpg",
+      "scene": "warm-lit living room with a dining set, TV, plants and a standing person",
+      "expected": [
+        {"label": "tv", "cx_frac": 0.14, "horizontal": "left", "distance_band": "near"},
+        {"label": "dining table", "cx_frac": 0.59, "horizontal": "ahead", "distance_band": "far"},
+        {"label": "chair", "cx_frac": 0.5, "horizontal": "ahead", "distance_band": "far"},
+        {"label": "chair", "cx_frac": 0.61, "horizontal": "ahead", "distance_band": "far"},
+        {"label": "person", "cx_frac": 0.68, "horizontal": "right", "distance_band": "far"},
+        {"label": "potted plant", "cx_frac": 0.39, "horizontal": "ahead", "distance_band": "far"},
+        {"label": "potted plant", "cx_frac": 0.74, "horizontal": "right", "distance_band": "far"}
+      ]
+    },
+    {
+      "image": "sample_bottle.jpg",
+      "scene": "dim bedroom, blue duvet filling the lower left, bottle on a dresser, plants and a bookcase",
+      "expected": [
+        {"label": "bed", "cx_frac": 0.31, "horizontal": "left", "distance_band": "very close"},
+        {"label": "bottle", "cx_frac": 0.16, "horizontal": "left", "distance_band": "far"},
+        {"label": "potted plant", "cx_frac": 0.23, "horizontal": "left", "distance_band": "far"},
+        {"label": "potted plant", "cx_frac": 0.59, "horizontal": "ahead", "distance_band": "far"},
+        {"label": "chair", "cx_frac": 0.46, "horizontal": "ahead", "distance_band": "far"}
+      ]
+    }
+  ]
+}

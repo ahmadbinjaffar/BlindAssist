@@ -1,0 +1,58 @@
+# BlindAssist - pinned direct dependencies (all free / open-source).
+#
+# Install with:
+#     python -m pip install -r requirements.txt
+#
+# NOTE: torch/torchvision are the CPU-only builds published on the official
+# PyTorch wheel index (smaller, no CUDA, fully offline once installed). The
+# --extra-index-url line below tells pip where to find them. Everything else
+# resolves from PyPI.
+#
+# For an exact reproduction of the full transitive environment, see
+# pip_freeze.txt (generated with `pip freeze` on a known-good setup).
+
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+torch==2.14.1+cpu
+torchvision==0.29.1+cpu
+ultralytics==8.4.184
+opencv-python==5.0.0.93
+numpy==2.5.2
+pyttsx3==2.99
+# Windows audio plumbing used by blindassist/speech.py:
+#   pywin32 -> pythoncom.CoInitialize() in the TTS worker thread (SAPI5/COM)
+#   pycaw   -> read the master volume/mute state and measure the output peak,
+#              which is how the app proves a sentence really produced sound
+pywin32==312
+pycaw==20260927
+pytest==9.1.1
+
+# Charts for scripts/benchmark.py (Evidence/benchmark.png).
+matplotlib==3.11.2
+
+# Notebook toolchain - only needed to rebuild and execute ML_Analysis.ipynb
+# (`python scripts/build_notebook.py` then `python -m nbconvert --to notebook
+# --execute --inplace ML_Analysis.ipynb`). The app itself does not import these.
+nbformat==5.11.1
+nbclient==0.11.0
+nbconvert==7.17.2
+ipykernel==7.4.0
+
+# Document toolchain - builds and audits the three written deliverables.
+# Not imported by the app, but required by the rebuild scripts:
+#     python scripts/make_report.py     # Docs/Project_Report_BlindAssist.docx
+#     python scripts/make_pptx.py       # Presentation/BlindAssist_Presentation.pptx
+#     python scripts/make_guide.py      # Docs/Presentation_Guide.docx
+#     python scripts/audit_docs.py      # Evidence/audit/audit_report.txt
+# (all four also convert to PDF and render page previews with PyMuPDF)
+python-docx==1.2.0
+python-pptx==1.0.2
+pymupdf==1.26.3
+
+# QA / static analysis - not imported by the app. Used by Evidence/test_report.md:
+#     python -m pytest -v --cov=blindassist     # tests + coverage
+#     python -m ruff check blindassist tests scripts
+#     python -m black --check blindassist tests scripts
+pytest-cov==7.1.0
+ruff==0.17.2
+black==26.10.1
