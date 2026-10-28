@@ -58,47 +58,6 @@ inspection.
 
 ---
 
-## Screenshots
-
-**Live webcam, speech active** — two people at different distances; the box colour
-follows urgency (red = very close, orange = near, green = far):
-
-![Live webcam run with two detected people](Evidence/screenshots/live.png)
-
-**No TTS voice available (fallback)** — the status bar shows `NO TTS`, detection
-and the `SAID` caption keep working, nothing crashes:
-
-![Fallback with no text-to-speech engine](Evidence/screenshots/fallback.png)
-
-**Still image `assets/samples/chair.jpg`** — grouping and pluralisation:
-*"Person on your right. Tv on your left. 3 chairs ahead."*
-
-![Run on a still image with three chairs grouped](Evidence/screenshots/chair.png)
-
-**Still image `assets/samples/bottle.jpg`** — five objects announced, nearest
-band first:
-
-![Run on a still image with five detected objects](Evidence/screenshots/bottle.png)
-
-**Improved overlay** — semi-transparent status/caption panels and a colour
-legend (feature 7):
-
-![Improved overlay with legend and semi-transparent panels](Evidence/screenshots/improved/improved_overlay.png)
-
-**Help screen (`H` key)** — the full key reference over a live scene:
-
-![Help screen toggled with the H key](Evidence/screenshots/improved/improved_help.png)
-
-**Auto low-light mode** — dark scenes are CLAHE-brightened for the detector
-only, the preview stays true, and the status bar shows `DARK` (feature 3):
-
-![Dark mode with DARK indicator](Evidence/screenshots/improved/improved_dark.png)
-
-More screenshots (saved with the `S` key and by the automated QA runs) are in
-[`Evidence/screenshots/`](Evidence/screenshots/).
-
----
-
 ## Features
 
 - **Real-time detection** with YOLOv8n on the CPU — the preview is never blocked
@@ -341,7 +300,7 @@ Exit codes: `0` = clean stop, `2` = no camera / unreadable `--video` file,
 | Venv behaves oddly after moving the folder | The `.venv` junction points at `C:\dev\ba_venv` | Re-run `.\setup.bat`; it repairs the link |
 | Windows says `Access is denied` for `mklink /J` | Junction needs an elevated prompt in some setups | Use an **elevated** PowerShell, or skip the junction and use the absolute venv path |
 
-Still stuck? The file log always has the detail: [`logs/blindassist.log`](logs/blindassist.log).
+Still stuck? The file log always has the detail: `logs/blindassist.log`.
 
 ### No sound? Troubleshooting
 
@@ -438,7 +397,7 @@ on the first run (to fetch the COCO subset); afterwards it is fully offline.
 ```
 
 Headline numbers from those runs are in
-[`Evidence/evaluation.md`](Evidence/evaluation.md) and summarised in
+`Evidence/evaluation.md` and summarised in
 [`ML_Analysis.ipynb`](ML_Analysis.ipynb).
 
 ---
@@ -460,10 +419,10 @@ Headline numbers from those runs are in
 
 Last run: **234 passed, 86% coverage** (every logic module ≥ 76%), ruff clean,
 black clean, runtime check PASS. Full details, including every bug found and
-fixed, are in [`Evidence/test_report.md`](Evidence/test_report.md).
+fixed, are in `Evidence/test_report.md`.
 
 A manual, by-hand verification sheet is in
-[`Evidence/Manual_Check.md`](Evidence/Manual_Check.md).
+`Evidence/Manual_Check.md`.
 
 `pytest.ini` restricts collection to `tests/`; `scripts/test_speech.py` is a
 manual demo, run it directly with `python scripts\test_speech.py`.
@@ -530,7 +489,7 @@ entirely **missed detections** of small, dim or cropped objects.
 
 RSS grew from 44 MB to 429 MB **during model warm-up and then went flat**
 (steady-state slope −0.62 MB/s, i.e. no growth); threads settled at 25; zero
-tracebacks, zero `[ERROR]` lines. See [`Evidence/qa_runtime.md`](Evidence/qa_runtime.md).
+tracebacks, zero `[ERROR]` lines. See `Evidence/qa_runtime.md`.
 
 ---
 
@@ -549,7 +508,7 @@ tracebacks, zero `[ERROR]` lines. See [`Evidence/qa_runtime.md`](Evidence/qa_run
 - **CPU speed.** YOLOv8n runs at ≈5 inferences/s on this CPU while the camera
   delivers ~10 FPS, so boxes lag the video by a frame or two. Options: run with
   `--size 320` (≈14 detections/s measured on this machine, see
-  [`Evidence/benchmark_sizes.md`](Evidence/benchmark_sizes.md)), `--skip 2` to
+  `Evidence/benchmark_sizes.md`), `--skip 2` to
   analyze every other frame, lower `inference_size` in `config.py`, or run on
   a machine with a GPU.
 - **The language option picks a *voice*, it does not translate.** `--language ur`
