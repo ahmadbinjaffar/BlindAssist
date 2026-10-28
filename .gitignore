@@ -32,10 +32,15 @@ datasets/
 # Not published in this repository (kept on the author's machine):
 # measurement evidence, the written report, the slide deck and the guide.
 Evidence/
-Docs/
 Presentation/
 *.docx
 *.pptx
+
+# The report folder is "Docs/" while the markdown developer docs are "docs/".
+# Ignore matching is case-insensitive on Windows, so the rule is written as
+# children + a negation that keeps the markdown files.
+Docs/*
+!Docs/*.md
 
 # Document builders: they generate the report / deck / guide, which are not
 # part of this repository.
